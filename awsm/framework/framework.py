@@ -289,7 +289,7 @@ class AWSM():
         saved logging statements.
         '''
 
-        level_styles = {'info': {'color': 'white'},
+        level_styles = {'info': {'color': 'black'},
                         'notice': {'color': 'magenta'},
                         'verbose': {'color': 'blue'},
                         'success': {'color': 'green', 'bold': True},
