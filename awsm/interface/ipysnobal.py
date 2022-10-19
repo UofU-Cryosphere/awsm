@@ -427,9 +427,17 @@ class PySnobal():
     def output_timestep(self):
         """Output the time step if on the right frequency.
         """
+        # self._logger.info(f'TIMESTEP INFO: {self.step_index}')
+        self._logger.info(f'TIMESTEP INFO: {self.time_step}')
+        # self._logger.info(f'TIMESTEP INFO: {type(self.time_step)}')
+        self._logger.info(f'TIMESTEP INFO: {self.time_step.hour}')
+        # self._logger.info(f'TIMESTEP INFO: {type(self.time_step.hour)}')
+        # self._logger.info(f'TIMESTEP INFO: {self.data_time_step}')
+        # self._logger.info(f"TIMESTEP INFO: {self.options['output']['frequency']}")
 
-        out_freq = (self.step_index * self.data_time_step /
-                    3600.0) % self.options['output']['frequency'] == 0
+        out_freq = (self.time_step.hour * self.data_time_step /
+                    3600.0) % self.options['output']['frequency'] == 0 # change self.step_index to self.time_step.hour -pk ensures we get data on 0,6,12,18z times
+        self._logger.info(f'TIMESTEP INFO: {out_freq}')
         last_time_step = self.step_index == len(
             self.options['time']['date_time']) - 1
 
