@@ -222,7 +222,7 @@ def output_timestep(s, tstep, options, output_vars):
     # the current time integer
     times = options['output']['snow'].variables['time']
     # offset to match same convention as iSnobal
-    tstep -= pd.to_timedelta(1, unit='h')
+    # tstep -= pd.to_timedelta(1, unit='h')                                 # pk commented this out. correct me if i'm wrong 2022 10 19
     t = nc.date2num(tstep.replace(tzinfo=None), times.units, times.calendar)
 
     if len(times) != 0:
