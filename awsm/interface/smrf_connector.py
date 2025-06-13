@@ -119,29 +119,19 @@ class SMRFConnector():
 
         inpt = {}
 
-        for f in self.force.keys():
-
-            if isinstance(self.force[f], np.ndarray):
+        for variable in self.force.keys():
+            if isinstance(self.force[variable], np.ndarray):
                 # If it's a constant value then just read in the numpy array
                 # pull out the value
                 # ensures not a reference (especially if T_g)
-                inpt[self.MAP_INPUTS[f]] = self.force[f].copy()
+                inpt[self.MAP_INPUTS[variable]] = self.force[variable].copy()
 
             else:
-                # determine the index in the netCDF file
-
-                # compare the dimensions and variables to get the variable name
-                v = list(set(self.force[f].variables.keys()) -
-                         set(self.force[f].dimensions.keys()))
-                v = [fv for fv in v if fv != 'projection'][0]
-
-                if f is 'net_solar':
-                    v = 'net_solar'
-
                 # make sure you're in the same timezone
-                if hasattr(self.force[f].variables['time'], 'time_zone'):
+                if hasattr(self.force[variable].variables['time'], 'time_zone'):
                     tstep_zone = tstep.astimezone(pytz.timezone(
-                        self.force[f].variables['time'].time_zone))
+                        self.force[variable].variables['time'].time_zone)
+                    )
                     tstep_zone = tstep.tz_localize(None)
                 else:
                     tstep_zone = tstep.tz_localize(None)
@@ -149,12 +139,13 @@ class SMRFConnector():
                 # find the index based on the time step
                 t = nc.date2index(
                     tstep_zone,
-                    self.force[f].variables['time'],
-                    calendar=self.force[f].variables['time'].calendar,
-                    select='exact')
+                    self.force[variable].variables['time'],
+                    calendar=self.force[variable].variables['time'].calendar,
+                    select='exact'
+                )
 
                 # pull out the value
-                inpt[self.MAP_INPUTS[f]] = \
-                    self.force[f].variables[v][t, :].astype(np.float64)
+                inpt[self.MAP_INPUTS[variable]] = \
+                    self.force[variable].variables[variable][t, :].astype(np.float64)
 
         return inpt

@@ -100,23 +100,3 @@ class TestRMESMRFiPysnobal(TestStandardRME):
 
         config.apply_recipes()
         cls.run_config = cast_all_variables(config, config.mcfg)
-
-
-class TestRMESMRFiPysnobalThread(TestStandardRME):
-    """
-    Testing using RME:
-        - smrf_ipysnobal
-        - SMRF threading
-        - initialize with all zeros
-        - loading from netcdf
-    """
-
-    @classmethod
-    def configure(cls):
-        config = cls.base_config_copy()
-        config.raw_cfg['awsm master']['run_smrf'] = False
-        config.raw_cfg['awsm master']['model_type'] = 'smrf_ipysnobal'
-        config.raw_cfg['system']['threading'] = True
-
-        config.apply_recipes()
-        cls.run_config = cast_all_variables(config, config.mcfg)

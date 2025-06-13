@@ -1,4 +1,1 @@
-smrf-dev
-setuptools_scm<4.2
-xarray>=0.15,<0.16
-
+smrf

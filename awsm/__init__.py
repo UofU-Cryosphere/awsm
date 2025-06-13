@@ -5,8 +5,6 @@ try:
 except DistributionNotFound:
     __version__ = 'unknown'
 
-from . import framework
-from . import interface
 import os
 import smrf
 
